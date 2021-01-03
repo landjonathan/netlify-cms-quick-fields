@@ -295,9 +295,9 @@ export const url = (name, args) => field(name, {
  * @param {string} name
  * @param {Field[]} fields
  * @param {string=} label
- * @param {string} filename
- * @param {string} path
- * @param {string} folder
+ * @param {string=} filename
+ * @param {string=} path
+ * @param {string=} folder
  * @param {'yml'|'yaml'|'toml'|'json'|'md'|'markdown'|'html'} extension
  * @return {Page}
  */
@@ -329,9 +329,9 @@ export const settingsPage = (name, fields, args) => page(name, fields, {
  * @param {string} name
  * @param {Field[]} fields
  * @param {string=} label
- * @param {string} path
- * @param {string} subfolder
- * @param {string} slug
+ * @param {string=} path
+ * @param {string=} subfolder
+ * @param {string=} slug
  * @param {string=} label_singular
  * @param {any|FieldArgs} [args]
  * @return {PostType}
