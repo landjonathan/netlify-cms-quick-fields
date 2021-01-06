@@ -193,6 +193,14 @@ export const list = (name, fields, args) => {
 }
 
 /**
+ * Generates a tags field, i.e.
+ * @param {string} name
+ * @param {any|FieldArgs} [args]
+ * @return {Field}
+ */
+export const tags = (name, args) => list(name, undefined, { hint: 'Comma separated. Make sure there is no comma at the end.', ...args })
+
+/**
  * Generates an image field. Defaults name to 'image'.
  * @param {string} name
  * @param {any|FieldArgs} [args]
