@@ -5,11 +5,11 @@
  */
 const titleize = name => name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, ' ').replace(/([A-Z])/g, ' $1')
 
-/**
- * @typedef {'boolean'|'code'|'color'|'datetime'|'file'|'hidden'|'image'|'list'|'map'|'markdown'|'number'|'object'|'relation'|'select'|'string'|'text'} Widget
- * @typedef {'bold'|'italic'|'code'|'link'|'heading-one'|'heading-two'|'heading-three'|'heading-four'|'heading-five'|'heading-six'|'quote'|'bulleted-list'|'numbered-list'} Button
- * @typedef {'raw'|'rich_text'} Mode
- */
+/** @typedef {'boolean'|'code'|'color'|'datetime'|'file'|'hidden'|'image'|'list'|'map'|'markdown'|'number'|'object'|'relation'|'select'|'string'|'text'} Widget */
+/** @typedef {'bold'|'italic'|'code'|'link'|'heading-one'|'heading-two'|'heading-three'|'heading-four'|'heading-five'|'heading-six'|'quote'|'bulleted-list'|'numbered-list'} Button */
+/** @typedef {'raw'|'rich_text'} Mode */
+/** @typedef {'yml'|'yaml'|'toml'|'json'|'frontmatter'|'yaml-frontmatter'|'toml-frontmatter'|'json-frontmatter'} PostFormat */
+/** @typedef {'yml'|'yaml'|'toml'|'json'|'md'|'markdown'|'html'} PageExtension */
 
 /**
  * Arguments that generate a field.
@@ -58,7 +58,8 @@ const titleize = name => name.charAt(0).toUpperCase() + name.slice(1).replace(/-
  * @property {string} [file] For relation widget
  * @property {string|string[]} [display_fields] For relation widget
  * @property {number} [options_length] For relation widget
- * @property {FieldArgs} [...args]
+ * @property {[object|boolean]} i18n
+ * @property {FieldArgs} [...rest]
  */
 
 /**
@@ -85,6 +86,7 @@ export const field = (name,
                         field,
                         defaultValue,
                         allow_add,
+                        i18n = true,
                         ...rest
                       } = {}) => {
 
@@ -102,6 +104,7 @@ export const field = (name,
     required,
     collapsed,
     default: defaultValue,
+    i18n,
     ...rest
   }
 
@@ -250,7 +253,7 @@ export const date = (name = 'date', args) => field(name, {
  * @param {any|FieldArgs} [args]
  * @return {Field}
  */
-export const boolean = (name, args) => field(name, { widget: 'boolean', ...args })
+export const boolean = (name, args) => field(name, { widget: 'boolean', defaultValue: false, ...args })
 
 /**
  * @typedef Option
@@ -306,14 +309,18 @@ export const url = (name, args) => field(name, {
  * @param {string=} filename
  * @param {string=} path
  * @param {string=} folder
- * @param {'yml'|'yaml'|'toml'|'json'|'md'|'markdown'|'html'} extension
+ * @param {PageExtension} extension
+ * @param {object|boolean=} i18n
+ * @param {any|FieldArgs} [...rest]
  * @return {Page}
  */
-export const page = (name, fields, { label, filename, path = 'src/content/', folder = 'pages', extension = 'yml' } = {}) => ({
+export const page = (name, fields, { label, filename, path = 'src/content/', folder = 'pages', extension = 'yml', i18n = true, ...rest } = {}) => ({
   name,
   file: `${path}${folder}/${filename || name}.${extension}`,
   label: label || titleize(name),
-  fields
+  fields,
+  [i18n ? 'i18n' : '_i18n']: i18n,
+  ...rest
 })
 
 /**
@@ -337,21 +344,25 @@ export const settingsPage = (name, fields, args) => page(name, fields, {
  * @param {string} name
  * @param {Field[]} fields
  * @param {string=} label
+ * @param {PostFormat=} format
  * @param {string=} path
  * @param {string=} subfolder
  * @param {string=} slug
  * @param {string=} label_singular
- * @param {any|FieldArgs} [args]
+ * @param {object|boolean=} i18n
+ * @param {any|FieldArgs} [...rest]
  * @return {PostType}
  */
-export const postType = (name, fields, { label, path = 'src/content', subfolder = '', slug = '{{slug}}', label_singular, ...args } = {}) => ({
+export const postType = (name, fields, { label, format = 'frontmatter', path = 'src/content', subfolder = '', slug = '{{slug}}', label_singular, i18n = true, ...rest } = {}) => ({
   name,
   folder: `${path}${subfolder || ''}/${name}`,
   label: label || titleize(name),
+  format,
   fields,
   editor: { preview: false },
   label_singular: label_singular || name.slice(0, -1),
   create: true,
   slug,
-  ...args
+  i18n,
+  ...rest
 })
