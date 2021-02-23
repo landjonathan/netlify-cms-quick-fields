@@ -287,11 +287,11 @@ export const select = (name, options, args) => field(name, {
 
 /**
  * Generates a string field validated at a URL
- * @param {string} name
+ * @param {string=} name
  * @param {any|FieldArgs} [args]
  * @return {Field}
  */
-export const url = (name, args) => field(name, {
+export const url = (name = 'url', args) => field(name, {
   pattern: ['https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)\n', 'Must be a valid URL'],
   ...args
 })
