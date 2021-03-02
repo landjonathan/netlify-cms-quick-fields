@@ -155,6 +155,8 @@ export const object = (name, fields, args) => required(name, {
   fields
 })
 
+export const group = object
+
 /**
  * Generates a list field.
  * Defaults singular label to the label with the last letter removed.
@@ -286,15 +288,83 @@ export const select = (name, options, args) => field(name, {
 })
 
 /**
- * Generates a string field validated at a URL
+ * Generates a string field validated as a URL
  * @param {string=} name
  * @param {any|FieldArgs} [args]
  * @return {Field}
  */
 export const url = (name = 'url', args) => field(name, {
-  pattern: ['https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)\n', 'Must be a valid URL'],
+  pattern: ['https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)', 'Must be a valid URL'],
   ...args
 })
+
+/**
+ * @typedef RelationAdditionalArgs
+ * @property {boolean} [multiple] For relation widget
+ * @property {[string]} [file] For relation widget
+ * @property {string[]} [display_fields] For relation widget
+ * @property {number} [options_length] For relation widget
+ */
+
+/**
+ * Generates a relation field
+ * @param {string} name
+ * @param {string} collection
+ * @param {string} value_field
+ * @param {string[]} search_fields
+ * @param {any|RelationAdditionalArgs=} args
+ * @return {Field}
+ */
+export const relation = (name, collection, value_field, search_fields, args) => field(name, { widget: 'relation', collection, value_field, search_fields, ...args })
+
+/**
+ * Generates a number
+ * @param {string} name
+ * @param {any|FieldArgs=} args
+ * @return {Field}
+ */
+export const number = (name, args) => field(name, { widget: 'number', ...args })
+
+/**
+ * Generates an integer
+ * @param {string} name
+ * @param {any|FieldArgs=} args
+ * @return {Field}
+ */
+export const int = (name, args) => number(name, { value_type: 'int', ...args })
+
+/**
+ * Generates a floating point number
+ * @param {string} name
+ * @param {any|FieldArgs=} args
+ * @return {Field}
+ */
+export const float = (name, args) => number(name, { value_type: 'float', ...args })
+
+/**
+ * Generates a range
+ * @param {string} name
+ * @param {number=} min
+ * @param {number=} max
+ * @param {number=} step
+ * @param {any|FieldArgs=} args
+ * @return {Field}
+ */
+export const range = (name, min = 0, max = 1, step = 0.1, args) => number(name, { min, max, step, ...args })
+
+/**
+ * Generates a percentage range
+ * @param {string=} name
+ * @return {Field}
+ */
+export const percentage = (name = 'percentage') => range(name, 1, 100, 1)
+
+/**
+ * Generates a field with a single file
+ * @param {string} name
+ * @return {Field}
+ */
+export const file = (name) => field(name, { widget: 'file', allow_multiple: false })
 
 /**
  * @typedef Page
