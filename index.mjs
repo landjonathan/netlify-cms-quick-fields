@@ -234,6 +234,7 @@ export const md = (name = 'text', args) => field(name, {
   editor_components: [], ...args,
 })
 export const markdown = md
+export const body = args => md('body', args)
 
 /**
  * Generates a date field. Defaults name to 'date'.
