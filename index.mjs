@@ -431,7 +431,7 @@ export const postType = (name, fields, { label, format = 'frontmatter', path = '
   format,
   fields,
   editor: { preview: false },
-  label_singular: label_singular || name.slice(0, -1),
+  label_singular: label_singular || titleize(name.slice(0, -1)),
   create: true,
   slug,
   i18n,
