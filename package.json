@@ -1,11 +1,17 @@
 {
   "name": "netlify-cms-quick-fields",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Helper functions for generating Netlify CMS fields and pages",
   "main": "index.mjs",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [ "netlify-cms" ],
+  "author": "Jonathan Land <mail@jonathanland.design>",
+  "homepage": "https://github.com/landjonathan/netlify-cms-quick-fields",
+  "repository": { "type": "git", "url": "https://github.com/landjonathan/netlify-cms-quick-fields" },
+  "bugs": {
+    "url": "https://github.com/landjonathan/netlify-cms-quick-fields/issues"
   },
-  "keywords": ["netlify-cms"],
-  "author": "Jonathan Land <mail@jonathanland.design>"
+  "engines": {
+    "node": ">=14"
+  },
+  "engineStrict": true
 }
