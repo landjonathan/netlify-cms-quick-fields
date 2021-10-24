@@ -198,12 +198,12 @@ export const list = (name, fields, args) => {
 }
 
 /**
- * Generates a tags field, i.e.
+ * Generates a tags field
  * @param {string} name
  * @param {any|FieldArgs} [args]
  * @return {Field}
  */
-export const tags = (name, args) => list(name, undefined, { hint: 'Comma separated. Make sure there is no comma at the end.', ...args })
+export const tags = (name = 'tags', args) => list(name, undefined, { hint: 'Comma separated. Make sure there is no comma at the end.', ...args })
 
 /**
  * Generates an image field. Defaults name to 'image'.
@@ -369,16 +369,18 @@ export const range = (name, min = 0, max = 1, step = 0.1, args) => number(name, 
 /**
  * Generates a percentage range
  * @param {string=} name
+ * @param {any|FieldArgs=} args
  * @return {Field}
  */
-export const percentage = (name = 'percentage') => range(name, 1, 100, 1)
+export const percentage = (name = 'percentage', args) => range(name, 1, 100, 1, args)
 
 /**
  * Generates a field with a single file
  * @param {string} name
+ * @param {any|FieldArgs=} args
  * @return {Field}
  */
-export const file = (name) => field(name, { widget: 'file', allow_multiple: false })
+export const file = (name = 'file', args) => field(name, { widget: 'file', allow_multiple: false, ...args })
 
 /**
  * @typedef Page
