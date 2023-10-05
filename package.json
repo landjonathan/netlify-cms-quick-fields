@@ -1,6 +1,6 @@
 {
   "name": "netlify-cms-quick-fields",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Helper functions for generating Netlify CMS fields and pages",
   "main": "index.mjs",
   "keywords": [ "netlify-cms" ],
