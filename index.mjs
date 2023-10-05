@@ -105,7 +105,7 @@ export const field = (name,
     collapsed,
     default: defaultValue,
     i18n,
-    ...rest
+    ...rest,
   }
 
   if (fields.length)
@@ -152,7 +152,7 @@ export const title = (name = 'title', args) => field(name, { ...args, required: 
 export const object = (name, fields, args) => required(name, {
   ...args,
   widget: 'object',
-  fields
+  fields,
 })
 
 export const group = object
@@ -171,7 +171,7 @@ export const list = (name, fields, args) => {
     ...args,
     widget: 'list',
     collapsed: (typeof args === 'undefined' || typeof args.collapsed === 'undefined') ? true : args.collapsed,
-    label_singular: (typeof args === 'undefined' || typeof args.label_singular === 'undefined') ? name.slice(0, -1) : args.label_singular
+    label_singular: (typeof args === 'undefined' || typeof args.label_singular === 'undefined') ? name.slice(0, -1) : args.label_singular,
   }
 
   let _label_singular
@@ -272,7 +272,7 @@ export const boolean = (name, args) => field(name, { widget: 'boolean', defaultV
  */
 export const option = (value, label) => ({
   value,
-  label: label || titleize(value)
+  label: label || titleize(value),
 })
 
 /**
@@ -285,7 +285,7 @@ export const option = (value, label) => ({
 export const select = (name, options, args) => field(name, {
   widget: 'select',
   options,
-  ...args
+  ...args,
 })
 
 /**
@@ -296,7 +296,7 @@ export const select = (name, options, args) => field(name, {
  */
 export const url = (name = 'url', args) => field(name, {
   pattern: ['https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,24}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)', 'Must be a valid URL'],
-  ...args
+  ...args,
 })
 
 /**
@@ -329,7 +329,13 @@ export const slug = (name = 'slug', args) => field(name, {
  * @param {any|RelationAdditionalArgs=} args
  * @return {Field}
  */
-export const relation = (name, collection, value_field, search_fields, args) => field(name, { widget: 'relation', collection, value_field, search_fields, ...args })
+export const relation = (name, collection, value_field, search_fields, args) => field(name, {
+  widget: 'relation',
+  collection,
+  value_field,
+  search_fields,
+  ...args,
+})
 
 /**
  * Generates a number
@@ -400,13 +406,21 @@ export const file = (name = 'file', args) => field(name, { widget: 'file', allow
  * @param {any|FieldArgs} [...rest]
  * @return {Page}
  */
-export const page = (name, fields, { label, filename, path = 'src/content/', folder = 'pages', extension = 'yml', i18n = true, ...rest } = {}) => ({
+export const page = (name, fields, {
+  label,
+  filename,
+  path = 'src/content/',
+  folder = 'pages',
+  extension = 'yml',
+  i18n = true,
+  ...rest
+} = {}) => ({
   name,
   file: `${path}${folder}/${filename || name}.${extension}`,
   label: label || titleize(name),
   fields,
   [i18n ? 'i18n' : '_i18n']: i18n,
-  ...rest
+  ...rest,
 })
 
 /**
@@ -418,7 +432,7 @@ export const page = (name, fields, { label, filename, path = 'src/content/', fol
  */
 export const settingsPage = (name, fields, args) => page(name, fields, {
   folder: '_data',
-  ...args
+  ...args,
 })
 
 /**
@@ -459,5 +473,5 @@ export const postType = (name, fields, {
   create: true,
   slug,
   i18n,
-  ...rest
+  ...rest,
 })
