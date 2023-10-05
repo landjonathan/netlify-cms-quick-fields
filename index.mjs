@@ -308,8 +308,8 @@ export const url = (name = 'url', args) => field(name, {
  * @see https://www.stackbit.com/docs/developer-guides/slugs-in-netlify-cms/
  */
 export const slug = (name = 'slug', args) => field(name, {
-  pattern: ['^[a-z0-9]+(?:-*[a-z0-9]+)*$','Lower case English, no spaces or special characters except for "-"'],
-  ...args
+  pattern: ['^[a-z0-9]+(?:-*[a-z0-9]+)*$', 'Lower case English, no spaces or special characters except for `-`'],
+  ...args,
 })
 
 /**
