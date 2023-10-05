@@ -439,7 +439,16 @@ export const settingsPage = (name, fields, args) => page(name, fields, {
  * @param {any|FieldArgs} [...rest]
  * @return {PostType}
  */
-export const postType = (name, fields, { label, format = 'frontmatter', path = 'src/content', subfolder = '', slug = '{{slug}}', label_singular, i18n = true, ...rest } = {}) => ({
+export const postType = (name, fields, {
+  label,
+  format = 'frontmatter',
+  path = 'src/content',
+  subfolder = '',
+  slug = fields.some(field => field.name === 'slug') ? '{{fields.slug}}' : '{{slug}}',
+  label_singular,
+  i18n = true,
+  ...rest
+} = {}) => ({
   name,
   folder: `${path}${subfolder || ''}/${name}`,
   label: label || titleize(name),
